@@ -26,4 +26,8 @@
     <Content Remove="**\*generate-proxy.json" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="..\HighSchool.Domain.Shared\Localization\HighSchool\en.json" Link="en.json" />
+  </ItemGroup>
+
 </Project>

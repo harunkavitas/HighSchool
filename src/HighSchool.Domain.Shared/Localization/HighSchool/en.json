@@ -26,7 +26,13 @@
     "Enum:CourseType.5": "Chemistry",
     "Enum:CourseType.6": "English",
     "Enum:CourseType.7": "History",
-    "Enum:CourseType.8": "Deutsch"
+    "Enum:CourseType.8": "Deutsch",
+
+    "Permission:HighSchool": "High School",
+    "Permission:Courses": "Course Management",
+    "Permission:Courses.Create": "Creating new Courses",
+    "Permission:Courses.Edit": "Editing the Courses",
+    "Permission:Courses.Delete": "Deleting the Courses"
   }
 }
 

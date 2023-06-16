@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HighSchool.Permissions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,6 +21,11 @@ namespace HighSchool.Courses
     {
         public CourseAppService(IRepository<Course, Guid> repository) : base(repository)
         {
+            GetPolicyName = HighSchoolPermissions.Courses.Default;
+            GetListPolicyName = HighSchoolPermissions.Courses.Default;
+            CreatePolicyName = HighSchoolPermissions.Courses.Create;
+            UpdatePolicyName = HighSchoolPermissions.Courses.Edit;
+            DeletePolicyName = HighSchoolPermissions.Courses.Delete;
         }
     }
 }
