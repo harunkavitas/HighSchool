@@ -1,8 +1,32 @@
 {
-  "culture": "en",
-  "texts": {
+  "Culture": "en",
+  "Texts": {
     "Menu:Home": "Home",
     "Welcome": "Welcome",
-    "LongWelcomeMessage": "Welcome to the application. This is a startup project based on the ABP framework. For more information, visit abp.io."
+    "LongWelcomeMessage": "Welcome to the application. This is a startup project based on the ABP framework. For more information, visit abp.io.",
+    "Menu:HighSchool": "High School",
+    "Menu:Course": "Course",
+    "Actions": "Actions",
+    "Close": "Close",
+    "Delete": "Delete",
+    "Edit": "Edit",
+    "PublishDate": "Publish date",
+    "NewCourse": "New Course",
+    "Name": "Name",
+    "Type": "Type",
+    "Price": "Price",
+    "CreationTime": "Creation time",
+    "AreYouSure": "Are you sure?",
+    "AreYouSureToDelete": "Are you sure you want to delete this item?",
+    "Enum:CourseType.0": "Maths",
+    "Enum:CourseType.1": "Literature",
+    "Enum:CourseType.2": "Physics",
+    "Enum:CourseType.3": "Geography",
+    "Enum:CourseType.4": "Biology",
+    "Enum:CourseType.5": "Chemistry",
+    "Enum:CourseType.6": "English",
+    "Enum:CourseType.7": "History",
+    "Enum:CourseType.8": "Deutsch"
   }
 }
+

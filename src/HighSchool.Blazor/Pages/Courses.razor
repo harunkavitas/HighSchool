@@ -1,0 +1,56 @@
+﻿@page "/courses"
+@using Volo.Abp.Application.Dtos
+@using HighSchool.Courses
+@using HighSchool.Localization
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<HighSchoolResource> L
+@inherits AbpCrudPageBase<ICourseAppService, CourseDto, Guid, PagedAndSortedResultRequestDto, CreateUpdateCourseDto>
+
+<Card>
+    <CardHeader>
+        <h2>@L["Courses"]</h2>
+    </CardHeader>
+    <CardBody>
+        <DataGrid TItem="CourseDto"
+                  Data="Entities"
+                  ReadData="OnDataGridReadAsync"
+                  TotalItems="TotalCount"
+                  ShowPager="true"
+                  PageSize="PageSize">
+            <DataGridColumns>
+                <DataGridColumn TItem="CourseDto"
+                                Field="@nameof(CourseDto.Name)"
+                                Caption="@L["Name"]">
+                            </DataGridColumn>
+
+                <DataGridColumn TItem="CourseDto"
+                                Field="@nameof(CourseDto.Type)"
+                                Caption="@L["Type"]">
+                    
+                </DataGridColumn>
+
+                <DataGridColumn TItem="CourseDto"
+                                Field="@nameof(CourseDto.PublishDate)"
+                                Caption="@L["PublishDate"]">
+                    <DisplayTemplate>
+                        @context.PublishDate.ToShortDateString()
+                    </DisplayTemplate>
+                </DataGridColumn>
+
+                <DataGridColumn TItem="CourseDto"
+                                Field="@nameof(CourseDto.Price)"
+                                Caption="@L["Price"]">
+                </DataGridColumn>
+
+                <DataGridColumn TItem="CourseDto"
+                                Field="@nameof(CourseDto.CreationTime)"
+                                Caption="@L["CreationTime"]">
+                    <DisplayTemplate>
+                        @context.CreationTime.ToLongDateString()
+                    </DisplayTemplate>
+                </DataGridColumn>
+
+            </DataGridColumns>
+        </DataGrid>
+    </CardBody>
+</Card>

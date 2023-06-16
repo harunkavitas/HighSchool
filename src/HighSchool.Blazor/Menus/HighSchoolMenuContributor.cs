@@ -33,6 +33,20 @@ public class HighSchoolMenuContributor : IMenuContributor
                 order: 0
             )
         );
+        context.Menu.AddItem(
+          new ApplicationMenuItem(
+        "HighSchool",
+        l["Menu:HighSchool"],
+        icon: "fa fa-desktop"
+       ).AddItem(
+        new ApplicationMenuItem(
+            "HighSchool.Course",
+            l["Menu:Course"],
+            url: "/courses"
+        )
+    )
+);
+ 
 
         if (MultiTenancyConsts.IsEnabled)
         {
