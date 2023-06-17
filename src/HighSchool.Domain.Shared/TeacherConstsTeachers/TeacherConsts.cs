@@ -4,7 +4,8 @@ using System.Text;
 
 namespace HighSchool.TeacherConstsTeachers
 {
-    internal class TeacherConsts
+    public static class TeacherConsts
     {
+        public const int MaxNameLength = 64;
     }
 }

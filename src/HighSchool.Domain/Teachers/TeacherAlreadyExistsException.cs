@@ -3,10 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Volo.Abp;
 
 namespace HighSchool.Teachers
 {
-    internal class TeacherAlreadyExistsException
+    public class TeacherAlreadyExistsException : BusinessException
     {
+        public TeacherAlreadyExistsException(string name)
+        : base(HighSchoolDomainErrorCodes.TeacherAlreadyExists)
+        {
+            WithData("name", name);
+        }
     }
 }

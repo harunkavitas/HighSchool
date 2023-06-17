@@ -1,4 +1,6 @@
 ﻿using HighSchool.Courses;
+using HighSchool.TeacherConstsTeachers;
+using HighSchool.Teachers;
 using Microsoft.EntityFrameworkCore;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
@@ -49,6 +51,7 @@ public class HighSchoolDbContext :
     public DbSet<IdentityLinkUser> LinkUsers { get; set; }
     public DbSet<IdentityUserDelegation> UserDelegations { get; set; }
     public DbSet<Course>Courses { get; set; }
+    public DbSet<Teacher> Teachers { get; set; }
 
     // Tenant Management
     public DbSet<Tenant> Tenants { get; set; }
@@ -93,5 +96,20 @@ public class HighSchoolDbContext :
             b.ConfigureByConvention(); //auto configure for the base class props
             b.Property(x => x.Name).IsRequired().HasMaxLength(128);
         });
+
+        builder.Entity<Teacher>(b =>
+        {
+            b.ToTable(HighSchoolConsts.DbTablePrefix + "Teachers",
+                HighSchoolConsts.DbSchema);
+
+            b.ConfigureByConvention();
+
+            b.Property(x => x.Name)
+                .IsRequired()
+                .HasMaxLength(TeacherConsts.MaxNameLength);
+
+            b.HasIndex(x => x.Name);
+        });
+
     }
 }

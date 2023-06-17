@@ -32,7 +32,8 @@
     "Permission:Courses": "Course Management",
     "Permission:Courses.Create": "Creating new Courses",
     "Permission:Courses.Edit": "Editing the Courses",
-    "Permission:Courses.Delete": "Deleting the Courses"
+    "Permission:Courses.Delete": "Deleting the Courses",
+    "HighSchool:00001": "There is already an Teacher with the same name: {name}
   }
 }
 
