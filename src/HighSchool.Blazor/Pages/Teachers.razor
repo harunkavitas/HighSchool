@@ -1,0 +1,177 @@
+﻿@page "/teachers"
+@using HighSchool.Teachers
+@using HighSchool.Localization
+@using Volo.Abp.AspNetCore.Components.Web
+@inherits HighSchoolComponentBase
+@inject ITeacherAppService TeacherAppService
+@inject AbpBlazorMessageLocalizerHelper<HighSchoolResource> LH
+<Card>
+    <CardHeader>
+        <Row Class="justify-content-between">
+            <Column ColumnSize="ColumnSize.IsAuto">
+                <h2>@L["Teachers"]</h2>
+            </Column>
+            <Column ColumnSize="ColumnSize.IsAuto">
+                    @if (CanCreateTeacher)
+                    {
+                        <Button Color="Color.Primary"
+                            Clicked="OpenCreateTeacherModal">
+                        @L["NewTeacher"]
+                        </Button>
+                    }
+            </Column>
+        </Row>
+    </CardHeader>
+    <CardBody>
+        <DataGrid TItem="TeacherDto"
+                  Data="TeacherList"
+                  ReadData="OnDataGridReadAsync"
+                  TotalItems="TotalCount"
+                  ShowPager="true"
+                  PageSize="PageSize">
+            <DataGridColumns>
+                <DataGridColumn Width="150px"
+                                TItem="TeacherDto"
+                                Field="@nameof(TeacherDto.Id)"
+                                Sortable="false"
+                                Caption="@L["Actions"]">
+                    <DisplayTemplate>
+                        <Dropdown>
+                            <DropdownToggle Color="Color.Primary">
+                                @L["Actions"]
+                            </DropdownToggle>
+                            <DropdownMenu>
+                                @if (CanEditTeacher)
+                                {
+                                    <DropdownItem Clicked="() => OpenEditTeacherModal(context)">
+                                        @L["Edit"]
+                                    </DropdownItem>
+                                }
+                                @if (CanDeleteTeacher)
+                                {
+                                    <DropdownItem Clicked="() => DeleteTeacherAsync(context)">
+                                        @L["Delete"]
+                                    </DropdownItem>
+                                }
+                            </DropdownMenu>
+                        </Dropdown>
+                    </DisplayTemplate>
+                </DataGridColumn>
+                <DataGridColumn TItem="TeacherDto"
+                                Field="@nameof(TeacherDto.Name)"
+                                Caption="@L["Name"]"></DataGridColumn>
+                <DataGridColumn TItem="TeacherDto"
+                                Field="@nameof(TeacherDto.BirthDate)"
+                                Caption="@L["BirthDate"]">
+                    <DisplayTemplate>
+                        @context.BirthDate.ToShortDateString()
+                    </DisplayTemplate>
+                </DataGridColumn>
+            </DataGridColumns>
+        </DataGrid>
+    </CardBody>
+</Card>
+
+<Modal @ref="CreateTeacherModal">
+    <ModalBackdrop />
+    <ModalContent IsCentered="true">
+        <Form>
+            <ModalHeader>
+                <ModalTitle>@L["NewATeacher"]</ModalTitle>
+                <CloseButton Clicked="CloseCreateTeacherModal" />
+            </ModalHeader>
+            <ModalBody>
+                <Validations @ref="@CreateValidationsRef" Model="@NewTeacher" ValidateOnLoad="false">
+                    <Validation MessageLocalizer="@LH.Localize">
+                        <Field>
+                            <FieldLabel>@L["Name"]</FieldLabel>
+                            <TextEdit @bind-Text="@NewTeacher.Name">
+                                <Feedback>
+                                    <ValidationError/>
+                                </Feedback>
+                            </TextEdit>
+                        </Field>
+                    </Validation>
+                    <Field>
+                        <FieldLabel>@L["BirthDate"]</FieldLabel>
+                        <DateEdit TValue="DateTime" @bind-Date="@NewTeacher.BirthDate" />
+                    </Field>
+                    <Validation MessageLocalizer="@LH.Localize">
+                        <Field>
+                            <FieldLabel>@L["ShortBio"]</FieldLabel>
+                            <MemoEdit Rows="5" @bind-Text="@NewTeacher.ShortBio">
+                                <Feedback>
+                                    <ValidationError/>
+                                </Feedback>
+                            </MemoEdit>
+                        </Field>
+                    </Validation>
+                </Validations>
+            </ModalBody>
+            <ModalFooter>
+                <Button Color="Color.Secondary"
+                        Clicked="CloseCreateTeacherModal">
+                    @L["Cancel"]
+                </Button>
+                <Button Color="Color.Primary"
+                        Type="@ButtonType.Submit"
+                        PreventDefaultOnSubmit="true"
+                        Clicked="CreateTeacherAsync">
+                    @L["Save"]
+                </Button>
+            </ModalFooter>
+        </Form>
+    </ModalContent>
+</Modal>
+
+<Modal @ref="EditTeacherModal">
+    <ModalBackdrop />
+    <ModalContent IsCentered="true">
+        <Form>
+            <ModalHeader>
+                <ModalTitle>@EditingTeacher.Name</ModalTitle>
+                <CloseButton Clicked="CloseEditTeacherModal" />
+                    </ModalHeader>
+            <ModalBody>
+                <Validations @ref="@EditValidationsRef" Model="@EditingTeacher" ValidateOnLoad="false">
+                    <Validation MessageLocalizer="@LH.Localize">
+                        <Field>
+                            <FieldLabel>@L["Name"]</FieldLabel>
+                            <TextEdit @bind-Text="@EditingTeacher.Name">
+                                <Feedback>
+                                    <ValidationError/>
+                                </Feedback>
+                            </TextEdit>
+                        </Field>
+                    </Validation>
+                    <Field>
+                        <FieldLabel>@L["BirthDate"]</FieldLabel>
+                        <DateEdit TValue="DateTime" @bind-Date="@EditingTeacher.BirthDate" />
+                    </Field>
+                    <Validation>
+                        <Field>
+                            <FieldLabel>@L["ShortBio"]</FieldLabel>
+                            <MemoEdit Rows="5" @bind-Text="@EditingTeacher.ShortBio">
+                                <Feedback>
+                                    <ValidationError/>
+                                </Feedback>
+                            </MemoEdit>
+                        </Field>
+                    </Validation>
+                </Validations>
+            </ModalBody>
+            <ModalFooter>
+                <Button Color="Color.Secondary"
+                        Clicked="CloseEditTeacherModal">
+                    @L["Cancel"]
+                </Button>
+                <Button Color="Color.Primary"
+                        Type="@ButtonType.Submit"
+                        PreventDefaultOnSubmit="true"
+                        Clicked="UpdateTeacherAsync">
+                    @L["Save"]
+                </Button>
+            </ModalFooter>
+        </Form>
+    </ModalContent>
+</Modal>

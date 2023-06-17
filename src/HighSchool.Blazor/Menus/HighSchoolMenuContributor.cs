@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using HighSchool.Localization;
 using HighSchool.MultiTenancy;
+using HighSchool.Permissions;
 using Volo.Abp.Identity.Blazor;
 using Volo.Abp.SettingManagement.Blazor.Menus;
 using Volo.Abp.TenantManagement.Blazor.Navigation;
@@ -15,7 +16,8 @@ public class HighSchoolMenuContributor : IMenuContributor
         if (context.Menu.Name == StandardMenus.Main)
         {
             await ConfigureMainMenuAsync(context);
-        }
+        } 
+        
     }
 
     private Task ConfigureMainMenuAsync(MenuConfigurationContext context)
@@ -23,30 +25,62 @@ public class HighSchoolMenuContributor : IMenuContributor
         var administration = context.Menu.GetAdministration();
         var l = context.GetLocalizer<HighSchoolResource>();
 
-        context.Menu.Items.Insert(
-            0,
-            new ApplicationMenuItem(
-                HighSchoolMenus.Home,
-                l["Menu:Home"],
-                "/",
-                icon: "fas fa-home",
-                order: 0
-            )
-        );
-        context.Menu.AddItem(
-          new ApplicationMenuItem(
-        "HighSchool",
-        l["Menu:HighSchool"],
-        icon: "fa fa-desktop"
-       ).AddItem(
-        new ApplicationMenuItem(
-            "HighSchool.Course",
-            l["Menu:Course"],
-            url: "/courses"
-        )
-    )
-);
- 
+        //        context.Menu.Items.Insert(
+        //            0,
+        //            new ApplicationMenuItem(
+        //                HighSchoolMenus.Home,
+        //                l["Menu:Home"],
+        //                "/",
+        //                icon: "fas fa-home",
+        //                order: 0
+        //            )
+        //        );
+        //        context.Menu.AddItem(
+        //          new ApplicationMenuItem(
+        //        "HighSchool",
+        //        l["Menu:HighSchool"],
+        //        icon: "fa fa-desktop"
+        //       ).AddItem(
+        //        new ApplicationMenuItem(
+        //            "HighSchool.Course",
+        //            l["Menu:Course"],
+        //            url: "/courses"
+        //        )
+        //    )
+        //);
+
+        //if (await context.IsGrantedAsync(HighSchoolPermissions.Teachers.Default))
+        //{
+        //    highSchoolMenu.AddItem(new ApplicationMenuItem(
+        //        "HighSchool.Teachers",
+        //        l["Menu:Teachers"],
+        //        url: "/teachers"
+        //    ));
+        //}
+        if (context.IsGrantedAsync(HighSchoolPermissions.Teachers.Default) != null)
+        {
+            context.Menu.AddItem(
+                new ApplicationMenuItem(
+                    "HighSchool",
+                    l["Menu:HighSchool"],
+                    icon: "fa fa-desktop"
+                ).AddItem(
+                    new ApplicationMenuItem(
+                        "HighSchool.Course",
+                        l["Menu:Course"],
+                        url: "/courses"
+                    )
+                )
+                .AddItem(
+                    new ApplicationMenuItem(
+                    "HighSchool.Teachers",
+                    l["Menu:Teachers"],
+                    url: "/teachers"
+                    )
+                )
+            );
+        }
+
 
         if (MultiTenancyConsts.IsEnabled)
         {

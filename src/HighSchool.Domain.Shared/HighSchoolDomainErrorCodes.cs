@@ -2,5 +2,5 @@
 
 public static class HighSchoolDomainErrorCodes
 {
-    public const string TeacherAlreadyExists = "HighSchool:00001";
+    //public const string TeacherAlreadyExists = "HighSchool:00001";
 }

@@ -33,12 +33,20 @@
     "Permission:Courses.Create": "Creating new Courses",
     "Permission:Courses.Edit": "Editing the Courses",
     "Permission:Courses.Delete": "Deleting the Courses",
-    "HighSchool:00001": "There is already an Teacher with the same name: {name},,,,,,,,,
+
+    //"HighSchool:00001": "There is already an teacher with the same name: {name}
 
     "Permission:Teachers": "Teacher Management",
     "Permission:Teachers.Create": "Creating new Teachers",
     "Permission:Teachers.Edit": "Editing the Teachers",
-    "Permission:Teachers.Delete": "Deleting the Teachers"
+    "Permission:Teachers.Delete": "Deleting the Teachers",
+
+    "Menu:Teachers": "Teachers",
+    "Teachers": "Teachers",
+    "TeacherDeletionConfirmationMessage": "Are you sure to delete the Teacher '{0}'?",
+    "BirthDate": "Birth date",
+    "NewTeacher": "New Teacher"
+
 
   }
 }

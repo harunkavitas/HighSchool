@@ -10,7 +10,7 @@ namespace HighSchool.Teachers
     public class TeacherAlreadyExistsException : BusinessException
     {
         public TeacherAlreadyExistsException(string name)
-        : base(HighSchoolDomainErrorCodes.TeacherAlreadyExists)
+        : base()
         {
             WithData("name", name);
         }
