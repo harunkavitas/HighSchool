@@ -25,8 +25,8 @@ namespace HighSchool.Teachers
         {
             Check.NotNullOrWhiteSpace(name, nameof(name));
 
-            var existingAuthor = await _teacherRepository.FindByNameAsync(name);
-            if (existingAuthor != null)
+            var existingTeacher = await _teacherRepository.FindByNameAsync(name);
+            if (existingTeacher != null)
             {
                 throw new TeacherAlreadyExistsException(name);
             }
@@ -46,8 +46,8 @@ namespace HighSchool.Teachers
             Check.NotNull(teacher, nameof(teacher));
             Check.NotNullOrWhiteSpace(newName, nameof(newName));
 
-            var existingAuthor = await _teacherRepository.FindByNameAsync(newName);
-            if (existingAuthor != null && existingAuthor.Id != teacher.Id)
+            var existingTeacher = await _teacherRepository.FindByNameAsync(newName);
+            if (existingTeacher != null && existingTeacher.Id != teacher.Id)
             {
                 throw new TeacherAlreadyExistsException(newName);
             }
