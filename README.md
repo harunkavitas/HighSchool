@@ -21,7 +21,7 @@
 #### Teacher
 > ![d](ReadMeContent/Teacher.PNG)
 
-###### Teacher Edit
+###### Teacher Create
 > ![d](ReadMeContent/Teacher_Create.PNG)
 
 ## Website Login
