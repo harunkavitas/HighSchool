@@ -9,6 +9,7 @@ namespace HighSchool.Courses
 {
     public class Course: AuditedAggregateRoot<Guid>
     {
+        public Guid TeacherId { get; set; }
         public string Name { get; set; }
 
         public CourseType Type { get; set; }
@@ -16,5 +17,6 @@ namespace HighSchool.Courses
         public DateTime PublishDate { get; set; }
 
         public float Price { get; set; }
+        
     }
 }

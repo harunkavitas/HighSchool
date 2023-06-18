@@ -45,7 +45,10 @@
     "Teachers": "Teachers",
     "TeacherDeletionConfirmationMessage": "Are you sure to delete the Teacher '{0}'?",
     "BirthDate": "Birth date",
-    "NewTeacher": "New Teacher"
+    "NewTeacher": "New Teacher",
+
+    "AnAuthorIsRequiredForCreatingBook": "An Teacher is required to create a Course"
+
 
 
   }

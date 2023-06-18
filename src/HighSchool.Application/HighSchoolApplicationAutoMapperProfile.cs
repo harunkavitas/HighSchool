@@ -11,6 +11,8 @@ public class HighSchoolApplicationAutoMapperProfile : Profile
         CreateMap<Course, CourseDto>();
         CreateMap<CreateUpdateCourseDto, Course>();
         CreateMap<Teacher, TeacherDto>();
+        CreateMap<Teacher, TeacherLookupDto>();
+
 
     }
 }

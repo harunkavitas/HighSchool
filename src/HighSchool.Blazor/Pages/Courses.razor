@@ -1,9 +1,11 @@
 ﻿@page "/courses"
+@using HighSchool.Permissions;
 @using Volo.Abp.Application.Dtos
 @using HighSchool.Courses
 @using HighSchool.Localization
 @using Microsoft.Extensions.Localization
 @using Volo.Abp.AspNetCore.Components.Web;
+@using Volo.Abp;
 @inject IStringLocalizer<HighSchoolResource> L
 @inject AbpBlazorMessageLocalizerHelper<HighSchoolResource> LH
 @inherits AbpCrudPageBase<ICourseAppService, CourseDto, Guid, PagedAndSortedResultRequestDto, CreateUpdateCourseDto>
@@ -49,6 +51,9 @@
                                 Field="@nameof(CourseDto.Name)"
                                 Caption="@L["Name"]">
                             </DataGridColumn>
+                <DataGridColumn TItem="CourseDto"
+                                Field="@nameof(CourseDto.TeacherName)"
+                                Caption="@L["Teacher"]"></DataGridColumn>
 
                 <DataGridColumn TItem="CourseDto"
                                 Field="@nameof(CourseDto.Type)"
@@ -93,6 +98,17 @@
             </ModalHeader>
             <ModalBody>
                 <Validations @ref="@CreateValidationsRef" Model="@NewEntity" ValidateOnLoad="false">
+                    <Field>
+                        <FieldLabel>@L["Teacher"]</FieldLabel>
+                        <Select TValue="Guid" @bind-SelectedValue="@NewEntity.TeacherId">
+                            @foreach (var teacher in teacherList)
+                            {
+                                <SelectItem TValue="Guid" Value="@teacher.Id">
+                                    @teacher.Name
+                                </SelectItem>
+                            }
+                        </Select>
+                    </Field>
                     <Validation MessageLocalizer="@LH.Localize">
                         <Field>
                             <FieldLabel>@L["Name"]</FieldLabel>
@@ -146,6 +162,17 @@
             </ModalHeader>
             <ModalBody>
                 <Validations @ref="@EditValidationsRef" Model="@NewEntity" ValidateOnLoad="false">
+                    <Field>
+                        <FieldLabel>@L["Teacher"]</FieldLabel>
+                        <Select TValue="Guid" @bind-SelectedValue="@EditingEntity.TeacherId">
+                            @foreach (var teacher in teacherList)
+                            {
+                                <SelectItem TValue="Guid" Value="@teacher.Id">
+                                    @teacher.Name
+                                </SelectItem>
+                            }
+                        </Select>
+                    </Field>
                     <Validation MessageLocalizer="@LH.Localize">
                         <Field>
                             <FieldLabel>@L["Name"]</FieldLabel>
@@ -188,3 +215,30 @@
         </Form>
     </ModalContent>
 </Modal>
+
+@code{
+    IReadOnlyList<TeacherLookupDto> teacherList = Array.Empty<TeacherLookupDto>();
+   
+    public Courses() // Constructor
+    {
+        CreatePolicyName = HighSchoolPermissions.Courses.Create;
+        UpdatePolicyName = HighSchoolPermissions.Courses.Edit;
+        DeletePolicyName = HighSchoolPermissions.Courses.Delete;
+    }
+    //GET AUTHORS ON INITIALIZATION
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        teacherList = (await AppService.GetTeacherLookupAsync()).Items;
+    }
+    protected override async Task OpenCreateModalAsync()
+    {
+        if (!teacherList.Any())
+        {
+            throw new UserFriendlyException(message: L["AnTeacherIsRequiredForCreatingCourse"]);
+        }
+
+        await base.OpenCreateModalAsync();
+        NewEntity.TeacherId = teacherList.First().Id;
+    }
+}

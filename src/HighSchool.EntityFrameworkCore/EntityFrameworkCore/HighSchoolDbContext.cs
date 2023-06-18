@@ -95,6 +95,8 @@ public class HighSchoolDbContext :
                 HighSchoolConsts.DbSchema);
             b.ConfigureByConvention(); //auto configure for the base class props
             b.Property(x => x.Name).IsRequired().HasMaxLength(128);
+            // ADD THE MAPPING FOR THE RELATION
+            b.HasOne<Teacher>().WithMany().HasForeignKey(x => x.TeacherId).IsRequired();
         });
 
         builder.Entity<Teacher>(b =>

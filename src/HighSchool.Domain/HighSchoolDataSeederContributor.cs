@@ -27,50 +27,70 @@ namespace HighSchool
 
         public async Task SeedAsync(DataSeedContext context)
         {
-            if (await _courseRepository.GetCountAsync() <= 0)
+            if (await _courseRepository.GetCountAsync() > 0)
             {
-                await _courseRepository.InsertAsync(
-                    new Course
-                    {
-                        Name = "Algorithm",
-                        Type = CourseType.Maths,
-                        PublishDate = new DateTime(2023, 6, 8),
-                        Price = 20
-                    },
-                    autoSave: true
+                return;
+            }
+            var alexander = await _teacherRepository.InsertAsync(
+            await _teacherManager.CreateAsync(
+                "alexander Geller",
+                new DateTime(1971, 06, 25),
+                "Geller produced literary criticism and poetry, fiction and polemical journalism; and is best known for the allegorical novella Animal Farm (1995) and the dystopian novel Nineteen Eighty-Four (1999)."
+            )
+        );
+
+                var roy = await _teacherRepository.InsertAsync(
+                    await _teacherManager.CreateAsync(
+                        "Thomas Roy",
+                        new DateTime(1994, 03, 11),
+                        "Roy Adams was an English author, screenwriter, essayist, humorist, satirist and dramatist. Adams was an advocate for environmentalism and conservation, a lover of fast cars, technological innovation and the Apple Macintosh, and a self-proclaimed 'radical atheist'."
+                    )
                 );
 
                 await _courseRepository.InsertAsync(
                     new Course
                     {
-                        Name = "2. World War",
-                        Type = CourseType.History,
-                        PublishDate = new DateTime(2023, 6, 9),
-                        Price = 15
+                        TeacherId = alexander.Id, // SET THE AUTHOR
+                        Name = "Static",
+                        Type = CourseType.Physics,
+                        PublishDate = new DateTime(1995, 6, 8),
+                        Price = 30
                     },
                     autoSave: true
                 );
+
+                await _courseRepository.InsertAsync(
+            new Course
+            {
+                TeacherId = roy.Id, // SET THE AUTHOR
+                Name = "The Time",
+                Type = CourseType.History,
+                PublishDate = new DateTime(2012, 9, 27),
+                Price = 45
+            },
+            autoSave: true
+        );
             }
             // ADDED SEED DATA FOR teachers
 
-            if (await _teacherRepository.GetCountAsync() <= 0)
-            {
-                await _teacherRepository.InsertAsync(
-                    await _teacherManager.CreateAsync(
-                        "Doc.Dr. Alex Douglas",
-                        new DateTime(1975, 06, 10),
-                        "Douglas produced literary criticism and poetry, fiction and polemical journalism; and is best known for the allegorical novella Animal Farm (1995) and the dystopian novel Nineteen Eighty-Four (1999)."
-                    )
-                );
+            //if (await _teacherRepository.GetCountAsync() <= 0)
+            //{
+            //    await _teacherRepository.InsertAsync(
+            //        await _teacherManager.CreateAsync(
+            //            "Doc.Dr. Alex Douglas",
+            //            new DateTime(1975, 06, 10),
+            //            "Douglas produced literary criticism and poetry, fiction and polemical journalism; and is best known for the allegorical novella Animal Farm (1995) and the dystopian novel Nineteen Eighty-Four (1999)."
+            //        )
+            //    );
 
-                await _teacherRepository.InsertAsync(
-                    await _teacherManager.CreateAsync(
-                        "Erling Truman",
-                        new DateTime(1998, 05, 15),
-                        "Truman Erling was an English teachers, screenwriter, essayist, humorist, satirist and dramatist. Adams was an advocate for environmentalism and conservation, a lover of fast cars, technological innovation and the Apple Macintosh, and a self-proclaimed 'radical atheist'."
-                    )
-                );
+            //    await _teacherRepository.InsertAsync(
+            //        await _teacherManager.CreateAsync(
+            //            "Erling Truman",
+            //            new DateTime(1998, 05, 15),
+            //            "Truman Erling was an English teachers, screenwriter, essayist, humorist, satirist and dramatist. Adams was an advocate for environmentalism and conservation, a lover of fast cars, technological innovation and the Apple Macintosh, and a self-proclaimed 'radical atheist'."
+            //        )
+            //    );
             }
         }
-    }
-}
+    
+

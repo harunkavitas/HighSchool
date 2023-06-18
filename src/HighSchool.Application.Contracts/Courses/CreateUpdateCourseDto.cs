@@ -7,6 +7,8 @@ namespace HighSchool.Courses
 {
     public class CreateUpdateCourseDto
     {
+        public Guid TeacherId { get; set; }
+
         [Required]
         [StringLength(128)]
         public string Name { get; set; }

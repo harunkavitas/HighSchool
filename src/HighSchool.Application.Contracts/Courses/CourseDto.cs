@@ -7,6 +7,8 @@ namespace HighSchool.Courses
 {
     public class CourseDto: AuditedEntityDto<Guid>
     {
+        public Guid TeacherId { get; set; }
+        public string TeacherName { get; set; }
         public string Name { get; set; }
 
         public CourseType Type { get; set; }
